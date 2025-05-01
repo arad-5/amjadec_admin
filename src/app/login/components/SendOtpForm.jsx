@@ -4,6 +4,7 @@ import { Alert, Button, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
 import EastIcon from '@mui/icons-material/East'
 import { enqueueSnackbar } from 'notistack'
+import axiosInstance from '@/utils/axios'
 
 const SendOtpForm = ({ phone, setPhone, setError, setStep }) => {
     const [loading, setLoading] = useState(false)
@@ -12,8 +13,14 @@ const SendOtpForm = ({ phone, setPhone, setError, setStep }) => {
         try {
             setLoading(true)
             setError('')
-            await axios
-                .post(`/admin/auth/send-otp`, { phone })
+            await axiosInstance
+                .post(
+                    `/admin/auth/send-otp`,
+                    { phone },
+                    {
+                        withCredentials: true,
+                    }
+                )
                 .catch((err) => {
                     console.error(err)
                     throw new Error(

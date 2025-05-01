@@ -1,9 +1,10 @@
 import axios from '@/utils/axios'
 import { Button, TextField, Typography } from '@mui/material'
 import { Box, Grid } from '@mui/system'
-import React, { useRef } from 'react'
+import React from 'react'
 import { useState } from 'react'
 import EastIcon from '@mui/icons-material/East'
+import axiosInstance from '@/utils/axios'
 
 const VerifyOtpForm = ({ phone, setError }) => {
     const [loading, setLoading] = useState(false)
@@ -13,8 +14,14 @@ const VerifyOtpForm = ({ phone, setError }) => {
         try {
             setLoading(true)
             setError('')
-            await axios
-                .post(`/admin/auth/verify-otp`, { phone, otp })
+            await axiosInstance
+                .post(
+                    `/admin/auth/verify-otp`,
+                    { phone, otp },
+                    {
+                        withCredentials: true,
+                    }
+                )
                 .catch((err) => {
                     console.dir(err)
                     throw new Error(
@@ -29,6 +36,8 @@ const VerifyOtpForm = ({ phone, setError }) => {
 
                     if (token) {
                         localStorage.setItem('adminToken', token)
+
+                        // Cookies.set('admin-token', token, { expires: 1 })
                         window.location.href = '/'
                     } else {
                         throw new Error('احراز هویت موفقیت آمیز نبود!')

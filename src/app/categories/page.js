@@ -17,6 +17,7 @@ import { useContext } from 'react'
 import { TopBarContext } from '@/context/TopBarContextProvider'
 import CategoriesSearch from './components/CategoriesSearch'
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone'
+import axiosInstance from '@/utils/axios'
 const CategoriesManagement = () => {
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(true)
@@ -25,7 +26,7 @@ const CategoriesManagement = () => {
     useEffect(() => console.log(categories), [categories])
     const getAllCategories = async () => {
         try {
-            const response = await axios.get('/admin/categories/main')
+            const response = await axiosInstance.get('/admin/categories/main')
             console.log('fetching categories')
             console.log(response)
             if (response.data.success) {
