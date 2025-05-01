@@ -39,52 +39,46 @@ export default function RootLayout({ children }) {
             >
                 <CacheProvider value={rtlCache}>
                     <ThemeProvider theme={theme}>
-                        <MessagesContextProvider>
-                            <TopBarContextProvider>
-                                <SnackbarProvider
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'right',
-                                    }}
-                                >
-                                    <CssBaseline />
-                                    <AuthProvider>
-                                        <FileUploadDialogContextProvider>
-                                            <div>
-                                                <div>
-                                                    {pathname !== '/login' ? (
-                                                        <Navbar />
-                                                    ) : (
-                                                        ''
-                                                    )}
-                                                    <div className="md:flex container mx-auto ">
-                                                        {pathname !==
-                                                        '/login' ? (
-                                                            <SideMenu />
-                                                        ) : (
-                                                            ''
-                                                        )}
+                        <SnackbarProvider
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                        >
+                            <CssBaseline />
+                            <AuthProvider>
+                                <FileUploadDialogContextProvider>
+                                    <TopBarContextProvider>
+                                        <MessagesContextProvider>
+                                            {pathname !== '/login' ? (
+                                                <Navbar />
+                                            ) : (
+                                                ''
+                                            )}
+                                            <div className="md:flex container mx-auto ">
+                                                {pathname !== '/login' ? (
+                                                    <SideMenu />
+                                                ) : (
+                                                    ''
+                                                )}
 
-                                                        <div
-                                                            className={cn(
-                                                                pathname !==
-                                                                    '/login'
-                                                                    ? ''
-                                                                    : 'w-full h-full flex flex-1 min-h-screen justify-center ',
-                                                                'w-full'
-                                                            )}
-                                                        >
-                                                            <TopBar />
-                                                            {children}
-                                                        </div>
-                                                    </div>
+                                                <div
+                                                    className={cn(
+                                                        pathname !== '/login'
+                                                            ? ''
+                                                            : 'w-full h-full flex flex-1 min-h-screen justify-center ',
+                                                        'w-full'
+                                                    )}
+                                                >
+                                                    <TopBar />
+                                                    {children}
                                                 </div>
                                             </div>
-                                        </FileUploadDialogContextProvider>
-                                    </AuthProvider>
-                                </SnackbarProvider>
-                            </TopBarContextProvider>
-                        </MessagesContextProvider>
+                                        </MessagesContextProvider>
+                                    </TopBarContextProvider>
+                                </FileUploadDialogContextProvider>
+                            </AuthProvider>
+                        </SnackbarProvider>
                     </ThemeProvider>
                 </CacheProvider>
             </body>

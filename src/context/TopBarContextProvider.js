@@ -4,19 +4,12 @@ import { usePathname } from 'next/navigation'
 export const TopBarContext = createContext()
 
 const TopBarContextProvider = ({ children }) => {
-    const [title, setTitle] = useState(null)
+    const [title, setTitle] = useState('null')
     const [icon, setIcon] = useState(null)
 
     useEffect(() => {
         console.log(title, icon)
     }, [title, icon])
-
-    const pathname = usePathname()
-
-    useEffect(() => {
-        setTitle(null)
-        setIcon(null)
-    }, [pathname])
 
     return (
         <TopBarContext.Provider
