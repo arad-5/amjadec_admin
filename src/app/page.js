@@ -1,15 +1,6 @@
 'use client'
-import { AuthContext } from '@/context/AuthContext'
-import {
-    Avatar,
-    Box,
-    Button,
-    Chip,
-    IconButton,
-    Typography,
-} from '@mui/material'
-import Image from 'next/image'
-import { useContext } from 'react'
+
+import { Box, Typography } from '@mui/material'
 
 export default function Home() {
     return (

@@ -2,34 +2,32 @@
 
 'use client'
 
-import React, { useState, useContext, useEffect } from 'react'
-
-import axios from '@/utils/axios'
-import { AuthContext } from '../../../context/AuthContext'
-import { useRouter } from 'next/navigation'
-import SuccessAlert from './components/SuccessAlert'
-import ErrorAlert from './components/ErrorAlert'
+import React, { useContext, useEffect } from 'react'
 
 import ProductImages from './components/ProductImages'
 import ProductInfo from './components/ProductInfo'
 import ProductCategory from './components/ProductCategory'
 
 import ProductFilter from './components/ProductFilter'
-import TopBar from './components/TopBar'
+
 import ProductInventoryManagement from './components/ProductInventoryManagement'
 import ProductPriceManagement from './components/ProductPriceManagement'
 import ProductSpecification from './components/ProductSpecification'
-
+import DashboardCustomizeTwoToneIcon from '@mui/icons-material/DashboardCustomizeTwoTone'
 import ProductContextProvider from './context/ProductContextProvider'
 import BottomBar from './components/BottomBar'
 import AttachedFiles from './components/AttachedFiles'
 import { TopBarContext } from '@/context/TopBarContextProvider'
 
 export default function CreateProductPage() {
-    const { setTitle: setTopBarTitle } = useContext(TopBarContext)
+    const { setTitle: setTopBarTitle, setIcon: setTopBarIcon } =
+        useContext(TopBarContext)
 
     useEffect(() => {
         setTopBarTitle('افزودن محصول')
+        setTopBarIcon(
+            <DashboardCustomizeTwoToneIcon className="ml-3 text-2xl" />
+        )
     }, [])
 
     return (
