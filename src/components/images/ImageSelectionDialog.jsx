@@ -173,7 +173,7 @@ function ImagePickerCard({ selectedImage, setSelectedImage }) {
                 fullWidth
                 maxWidth="md"
             >
-                <DialogTitle>Select an Image</DialogTitle>
+                <DialogTitle>انتخاب تصویر</DialogTitle>
                 <DialogContent dividers>
                     {dialogLoading ? (
                         <Box
@@ -236,13 +236,15 @@ function ImagePickerCard({ selectedImage, setSelectedImage }) {
                 </Box>
 
                 <DialogActions>
-                    <Button onClick={closeDialog}>Cancel</Button>
+                    <Button onClick={closeDialog} color="inherit">
+                        لغو
+                    </Button>
                     <Button
                         onClick={handleSaveSelection}
                         variant="contained"
                         disabled={!dialogSelectedImage}
                     >
-                        Save
+                        تایید
                     </Button>
                 </DialogActions>
             </Dialog>

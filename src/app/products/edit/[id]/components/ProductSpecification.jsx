@@ -18,40 +18,38 @@ import {
     Delete as DeleteIcon,
     Edit as EditIcon,
     Save as SaveIcon,
+    Add as AddIcon,
 } from '@mui/icons-material'
+
 import { EditProductContext } from '../context/EditProductContextProvider'
+import { nanoid } from 'nanoid'
 
 const ProductSpecification = () => {
     const { specifications, setSpecifications } = useContext(EditProductContext)
     const [editingRowId, setEditingRowId] = useState(null)
     const [newRow, setNewRow] = useState({ attribute: '', value: '' })
 
-    // Handle input changes for new rows
     const handleNewRowChange = (field, value) => {
         setNewRow({ ...newRow, [field]: value })
     }
 
-    // Add a new row
     const handleAddRow = () => {
-        if (!newRow.attribute || !newRow.value) {
-            alert('Both attribute and value are required.')
+        if (!newRow.attribute.trim() || !newRow.value.trim()) {
+            alert('مقدار ویژگی و مقدار باید وارد شوند.')
             return
         }
         setSpecifications([...specifications, { id: Date.now(), ...newRow }])
         setNewRow({ attribute: '', value: '' })
     }
 
-    // Delete a row
     const handleDeleteRow = (id) => {
         setSpecifications(specifications.filter((row) => row.id !== id))
     }
 
-    // Edit a row
     const handleEditRow = (id) => {
         setEditingRowId(id)
     }
 
-    // Save edited row
     const handleSaveRow = (id) => {
         setSpecifications(
             specifications.map((row) =>
@@ -63,7 +61,6 @@ const ProductSpecification = () => {
         setEditingRowId(null)
     }
 
-    // Handle inline editing
     const handleRowChange = (id, field, value) => {
         setSpecifications(
             specifications.map((row) =>
@@ -73,24 +70,32 @@ const ProductSpecification = () => {
     }
 
     return (
-        <div className="mb-3">
-            <div className="mb-3">
-                <span className="text-xl font-medium">فیچر ها</span>
-            </div>
+        <Box className="rounded-lg shadow-md bg-white p-4 mb-4">
+            <Typography variant="h6" fontWeight={700} mb={2}>
+                ویژگی‌های محصول
+            </Typography>
 
-            {/* Table */}
-            <TableContainer component={Paper} sx={{ marginY: 2 }}>
-                <Table>
+            <TableContainer
+                component={Paper}
+                sx={{ marginY: 2, borderRadius: 2 }}
+            >
+                <Table size="small">
                     <TableHead>
-                        <TableRow>
-                            <TableCell>Attribute</TableCell>
-                            <TableCell>Value</TableCell>
-                            <TableCell align="center">Actions</TableCell>
+                        <TableRow sx={{ backgroundColor: '#f9fafb' }}>
+                            <TableCell sx={{ fontWeight: 600 }}>
+                                ویژگی
+                            </TableCell>
+                            <TableCell sx={{ fontWeight: 600 }}>
+                                مقدار
+                            </TableCell>
+                            <TableCell align="center" sx={{ fontWeight: 600 }}>
+                                عملیات
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {specifications.map((row) => (
-                            <TableRow key={row.id}>
+                            <TableRow key={nanoid()} hover>
                                 <TableCell>
                                     {editingRowId === row.id ? (
                                         <TextField
@@ -103,9 +108,12 @@ const ProductSpecification = () => {
                                                 )
                                             }
                                             fullWidth
+                                            size="small"
                                         />
                                     ) : (
-                                        row.attribute
+                                        <Typography fontSize={14}>
+                                            {row.attribute}
+                                        </Typography>
                                     )}
                                 </TableCell>
                                 <TableCell>
@@ -120,37 +128,48 @@ const ProductSpecification = () => {
                                                 )
                                             }
                                             fullWidth
+                                            size="small"
                                         />
                                     ) : (
-                                        row.value
+                                        <Typography fontSize={14}>
+                                            {row.value}
+                                        </Typography>
                                     )}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {editingRowId === row.id ? (
-                                        <IconButton
-                                            color="primary"
-                                            onClick={() =>
-                                                handleSaveRow(row.id)
-                                            }
-                                        >
-                                            <SaveIcon />
-                                        </IconButton>
-                                    ) : (
-                                        <IconButton
-                                            color="primary"
-                                            onClick={() =>
-                                                handleEditRow(row.id)
-                                            }
-                                        >
-                                            <EditIcon />
-                                        </IconButton>
-                                    )}
-                                    <IconButton
-                                        color="error"
-                                        onClick={() => handleDeleteRow(row.id)}
+                                    <Stack
+                                        direction="row"
+                                        justifyContent="center"
+                                        spacing={1}
                                     >
-                                        <DeleteIcon />
-                                    </IconButton>
+                                        {editingRowId === row.id ? (
+                                            <IconButton
+                                                color="success"
+                                                onClick={() =>
+                                                    handleSaveRow(row.id)
+                                                }
+                                            >
+                                                <SaveIcon fontSize="small" />
+                                            </IconButton>
+                                        ) : (
+                                            <IconButton
+                                                color="primary"
+                                                onClick={() =>
+                                                    handleEditRow(row.id)
+                                                }
+                                            >
+                                                <EditIcon fontSize="small" />
+                                            </IconButton>
+                                        )}
+                                        <IconButton
+                                            color="error"
+                                            onClick={() =>
+                                                handleDeleteRow(row.id)
+                                            }
+                                        >
+                                            <DeleteIcon fontSize="small" />
+                                        </IconButton>
+                                    </Stack>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -158,31 +177,34 @@ const ProductSpecification = () => {
                 </Table>
             </TableContainer>
 
-            {/* Add New Row */}
             <Stack direction="row" spacing={2} alignItems="center">
                 <TextField
-                    label="Attribute"
+                    label="ویژگی جدید"
                     value={newRow.attribute}
                     onChange={(e) =>
                         handleNewRowChange('attribute', e.target.value)
                     }
+                    size="small"
                 />
                 <TextField
-                    label="Value"
+                    label="مقدار جدید"
                     value={newRow.value}
                     onChange={(e) =>
                         handleNewRowChange('value', e.target.value)
                     }
+                    size="small"
                 />
                 <Button
                     variant="contained"
-                    color="primary"
+                    color="success"
+                    startIcon={<AddIcon />}
                     onClick={handleAddRow}
+                    sx={{ minWidth: 120 }}
                 >
-                    Add
+                    افزودن
                 </Button>
             </Stack>
-        </div>
+        </Box>
     )
 }
 

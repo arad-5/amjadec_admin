@@ -18,14 +18,11 @@ import {
     Typography,
     Chip,
 } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
-import CloseIcon from '@mui/icons-material/Close'
+
 import axiosInstance from '@/utils/axios'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
-import Image from 'next/image'
-import { cn } from '@/utils/cn'
+
 import { ProductContext } from '../context/ProductContextProvider'
-import ImagePreviewerCard from '@/components/images/ImagePreviewerCard'
 
 function ImagesSelect() {
     // State to hold images added to the product
@@ -104,15 +101,6 @@ function ImagesSelect() {
 
     return (
         <div>
-            {/* {productImages.map((image, index) => (
-                    <ImagePreviewerCard
-                        key={image._id}
-                        image={image}
-                        index={index + 2}
-                        closeHandler={() => handleRemoveImage(image._id)}
-                    />
-                ))} */}
-
             <Grid item xs={6} sm={4} md={3}>
                 <CardActionArea
                     sx={{
@@ -203,13 +191,15 @@ function ImagesSelect() {
                 </Box>
 
                 <DialogActions>
-                    <Button onClick={closeDialog}>Cancel</Button>
+                    <Button onClick={closeDialog} color="inherit">
+                        لغو
+                    </Button>
                     <Button
                         onClick={handleSaveSelection}
                         variant="contained"
                         disabled={!dialogSelectedImage}
                     >
-                        Save
+                        تایید
                     </Button>
                 </DialogActions>
             </Dialog>

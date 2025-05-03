@@ -17,10 +17,7 @@ const EditProductContextProvider = ({ children }) => {
     const [stockStatus, setStockStatus] = useState('in_stock')
     const [stockQuantity, setStockQuantity] = useState(1)
     const [lowStockThreshold, setLowStockThreshold] = useState(10)
-    const [specifications, setSpecifications] = useState([
-        { id: 1, attribute: 'Material', value: 'Cotton' },
-        { id: 2, attribute: 'Color', value: 'Blue' },
-    ])
+    const [specifications, setSpecifications] = useState([])
     const [imageUrl, setImageUrl] = useState('')
 
     // State for handling submission status

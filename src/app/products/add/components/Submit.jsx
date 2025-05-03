@@ -18,7 +18,7 @@ const Submit = () => {
         description,
         partNumber,
         category,
-        specification,
+        specifications,
         mainImage,
         images,
         discountPrice,
@@ -37,7 +37,7 @@ const Submit = () => {
 
         try {
             //states validation , throws error if state are not valid
-            console.log(productStates)
+
             const response = await axiosInstance.post('/admin/products', {
                 status,
                 mainImage: mainImage?._id,
@@ -48,11 +48,12 @@ const Submit = () => {
                 price,
                 discountPrice,
                 category,
-                specification,
+                specifications,
                 isDiscountActive,
                 stockStatus,
                 stockQuantity,
                 lowStockThreshold,
+                specifications,
             })
 
             if (response.data.success) {

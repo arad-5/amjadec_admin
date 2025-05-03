@@ -21,6 +21,7 @@ import {
     Add as AddIcon,
 } from '@mui/icons-material'
 import { ProductContext } from '../context/ProductContextProvider'
+import { nanoid } from 'nanoid'
 
 const ProductSpecification = () => {
     const { specifications, setSpecifications } = useContext(ProductContext)
@@ -93,7 +94,7 @@ const ProductSpecification = () => {
                     </TableHead>
                     <TableBody>
                         {specifications.map((row) => (
-                            <TableRow key={row.id} hover>
+                            <TableRow key={nanoid()} hover>
                                 <TableCell>
                                     {editingRowId === row.id ? (
                                         <TextField

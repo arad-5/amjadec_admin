@@ -72,7 +72,15 @@ export default function RootLayout({ children }) {
                                                         'w-full'
                                                     )}
                                                 >
-                                                    <div className="relative h-screen overflow-x-hidden overflow-y-scroll">
+                                                    <div
+                                                        className={cn(
+                                                            'relative h-screen overflow-x-hidden ',
+                                                            pathname !==
+                                                                '/login'
+                                                                ? 'overflow-y-scroll'
+                                                                : ''
+                                                        )}
+                                                    >
                                                         <TopBar />
                                                         {children}
                                                     </div>

@@ -13,6 +13,7 @@ import ProductInventoryManagement from './components/ProductInventoryManagement'
 import ProductPriceManagement from './components/ProductPriceManagement'
 import ProductSpecification from './components/ProductSpecification'
 import { Box, Divider, Skeleton } from '@mui/material'
+import { TopBarContext } from '@/context/TopBarContextProvider'
 export default function Page({ params }) {
     const { id: productId } = React.use(params)
     const [loading, setLoading] = useState(true)
@@ -23,9 +24,7 @@ export default function Page({ params }) {
         setPrice,
         setCategory,
         setSpecifications,
-        setImageUrl,
-        setSuccessMessage,
-        setErrorMessage,
+
         setDiscountPrice,
         setIsDiscountActive,
         setStockStatus,
@@ -36,7 +35,7 @@ export default function Page({ params }) {
         setImages,
         setMainImage,
     } = useContext(EditProductContext)
-
+    const { setTitle: setTopBarTitle } = useContext(TopBarContext)
     const fetchProduct = async () => {
         const response = await axiosInstance.get('/admin/products/' + productId)
         console.log(response)
@@ -47,7 +46,7 @@ export default function Page({ params }) {
             setDescription(product.description)
             setPrice(product.price)
             setCategory(product.category?._id)
-            setSpecifications(product?.specification)
+            setSpecifications(product?.specifications)
             setDiscountPrice(product.discountPrice)
             setIsDiscountActive(product.isDiscountActive)
             setStockStatus(product.stockStatus)
@@ -63,6 +62,7 @@ export default function Page({ params }) {
     }
 
     useEffect(() => {
+        setTopBarTitle(null)
         fetchProduct()
     }, [])
 

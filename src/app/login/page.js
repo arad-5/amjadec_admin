@@ -15,7 +15,7 @@ export default function AdminLoginPage() {
     const [loading, setLoading] = useState(false)
 
     return (
-        <div className="w-full flex flex-col justify-center items-center px-6">
+        <div className="w-full flex flex-col justify-center items-center h-full px-6">
             <div className="max-w-96">
                 <div className="w-full flex flex-col items-center">
                     <span className="text-sm -mb-3 block">شهر الکترونیک</span>

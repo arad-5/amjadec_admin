@@ -20,7 +20,7 @@ const Submit = ({ loading }) => {
         description,
         partNumber,
         category,
-        specification,
+        specifications,
         mainImage,
         images,
         discountPrice,
@@ -40,7 +40,7 @@ const Submit = ({ loading }) => {
         try {
             //states validation , throws error if state are not valid
 
-            console.log(productStates)
+            console.log('submit', productStates)
             const response = await axiosInstance.put(
                 '/admin/products/' + productId,
                 {
@@ -52,7 +52,7 @@ const Submit = ({ loading }) => {
                     price,
                     discountPrice,
                     category,
-                    specification,
+                    specifications,
                     isDiscountActive,
                     stockStatus,
                     stockQuantity,

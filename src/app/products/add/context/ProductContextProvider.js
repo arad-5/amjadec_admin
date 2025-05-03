@@ -13,8 +13,8 @@ const ProductContextProvider = ({ children }) => {
     const [category, setCategory] = useState(null)
     const [categoryObj, setCategoryObj] = useState({})
     const [discountPrice, setDiscountPrice] = useState(90000) // Default discount price
-    const [isDiscountActive, setIsDiscountActive] = useState(true) // Toggle for discount
-    const [stockStatus, setStockStatus] = useState('in_stock')
+    const [isDiscountActive, setIsDiscountActive] = useState(false) // Toggle for discount
+    const [stockStatus, setStockStatus] = useState('out_of_stock')
     const [stockQuantity, setStockQuantity] = useState(1)
     const [lowStockThreshold, setLowStockThreshold] = useState(10)
     const [specifications, setSpecifications] = useState([

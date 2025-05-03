@@ -23,14 +23,14 @@ import {
     TablePagination,
     Tooltip,
 } from '@mui/material'
-import DownloadIcon from '@mui/icons-material/Download'
+import ContentCopyTwoToneIcon from '@mui/icons-material/ContentCopyTwoTone'
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import CheckIcon from '@mui/icons-material/Check'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+
 import { FileEditDialogContext } from '../context/FileEditDialogContextProvider'
 import { FileDeleteDialogContext } from '../context/FileDeleteDialogContextProvider'
-
+import DownloadTwoToneIcon from '@mui/icons-material/DownloadTwoTone'
 const FileTable = ({
     files,
     loading,
@@ -157,7 +157,7 @@ const FileTable = ({
                                                         color="success"
                                                     />
                                                 ) : (
-                                                    <ContentCopyIcon fontSize="small" />
+                                                    <ContentCopyTwoToneIcon fontSize="small" />
                                                 )}
                                             </IconButton>
                                         </Tooltip>
@@ -167,7 +167,7 @@ const FileTable = ({
                                                 target="_blank"
                                                 download
                                             >
-                                                <DownloadIcon />
+                                                <DownloadTwoToneIcon />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title="ویرایش">
