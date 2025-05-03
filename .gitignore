@@ -6,7 +6,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # Optional: dotenv environment files
-# .env
+.env
 # .env.local
 # .env.*.local
 

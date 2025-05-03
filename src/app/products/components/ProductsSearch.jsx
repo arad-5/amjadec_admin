@@ -1,10 +1,11 @@
 import { Add, Search } from '@mui/icons-material'
 import { Button, TextField } from '@mui/material'
 import { Stack } from '@mui/system'
-import Link from 'next/link'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const ProductsSearch = ({ searchQuery, setSearchQuery }) => {
+    const router = useRouter()
+
     return (
         <Stack
             className="p-4 bg-white"
@@ -28,8 +29,9 @@ const ProductsSearch = ({ searchQuery, setSearchQuery }) => {
                 variant="contained"
                 startIcon={<Add />}
                 className="shrink-0"
+                onClick={() => router.push('/products/add')}
             >
-                <Link href="/products/add">افزودن محصول</Link>
+                افزودن محصول
             </Button>
         </Stack>
     )

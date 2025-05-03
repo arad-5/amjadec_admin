@@ -12,13 +12,8 @@ const Submit = () => {
     const {
         status,
         setStatus,
-        setTitle,
-        setDescription,
         price,
-        setPrice,
-        setCategory,
         setSuccessMessage,
-        setErrorMessage,
         title,
         description,
         partNumber,
@@ -31,9 +26,10 @@ const Submit = () => {
         stockStatus,
         stockQuantity,
         lowStockThreshold,
-    } = useContext(ProductContext)
+    } = productStates
     const { setMessages } = useContext(MessagesContext)
     const [loading, setLoading] = useState(false)
+
     const handleSubmit = async () => {
         // Reset messages
         setLoading(true)
@@ -41,7 +37,6 @@ const Submit = () => {
 
         try {
             //states validation , throws error if state are not valid
-
             console.log(productStates)
             const response = await axiosInstance.post('/admin/products', {
                 status,
@@ -68,11 +63,11 @@ const Submit = () => {
                     },
                 ])
                 // Clear form fields
-                setTitle('')
-                setDescription('')
-                setPrice('')
-                setStatus(null)
-                setCategory(null)
+                // setTitle('')
+                // setDescription('')
+                // setPrice('')
+                // setStatus(null)
+                // setCategory(null)
             } else {
                 setMessages([
                     {

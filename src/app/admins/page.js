@@ -41,6 +41,7 @@ const Page = () => {
             setLoading(false)
         }
     }
+
     useEffect(() => {
         setTitle('مدیریت ادمین')
         setIcon(<PeopleAltTwoToneIcon className="text-2xl ml-3" />)
@@ -94,7 +95,14 @@ const Page = () => {
                                         </IconButton>
                                     </Tooltip>
                                 </Box>
-                                <AdminsTable admins={admins} />
+                                <Box
+                                    sx={{
+                                        overflowX: 'auto',
+                                        width: '100%',
+                                    }}
+                                >
+                                    <AdminsTable admins={admins} />
+                                </Box>
                             </Box>
                         </Box>
                     </AdminDeleteDialogProvider>

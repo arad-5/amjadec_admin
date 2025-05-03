@@ -55,7 +55,7 @@ const NestedAccordion = ({ category }) => {
 
 const CategoriesTree = ({ loading, categories }) => {
     return (
-        <div className="p-4">
+        <>
             {loading ? (
                 <List sx={{ padding: 0 }}>
                     {Array.from({ length: 6 }).map((_, i) => (
@@ -104,7 +104,7 @@ const CategoriesTree = ({ loading, categories }) => {
                     <NestedAccordion key={category._id} category={category} />
                 ))
             )}
-        </div>
+        </>
     )
 }
 

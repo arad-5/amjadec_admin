@@ -8,13 +8,12 @@ const BottomBar = () => {
             sx={{
                 padding: 2,
                 width: '100%',
-                borderTop: '1px solid #eee',
-                borderRight: '1px solid #eee',
+                border: '1px solid #eee',
+                borderBottom: '0px solid #eee',
                 backgroundColor: '#fff',
                 position: 'sticky',
-                left: 0,
+                right: 0,
                 bottom: 0,
-                zIndex: 20,
             }}
         >
             <Submit />

@@ -26,7 +26,7 @@ const CategoryInfo = ({ parentId }) => {
         setImage,
     } = useContext(CategoryContext)
     return (
-        <div className="col-span-6 pl-4 bg-white p-4 rounded-lg shadow-md ">
+        <div className="col-span-6 pl-4">
             <div className="pb-3 mb-3 border-b">
                 <span className="text-lg font-semibold">مشخصات دسته بندی</span>
             </div>

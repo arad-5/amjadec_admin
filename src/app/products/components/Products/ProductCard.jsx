@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import LinkIcon from '@mui/icons-material/Link'
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone'
 import Inventory2TwoToneIcon from '@mui/icons-material/Inventory2TwoTone'
@@ -18,7 +18,16 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 
 const ProductCard = ({ product }) => {
     const isIncomplete = product.status === 'incomplete'
-
+    const [isPartnumberCopied, setIsPartnumberCopied] = useState(false)
+    const handleCopyId = async (id) => {
+        try {
+            await navigator.clipboard.writeText(id)
+            setIsPartnumberCopied(true)
+            setTimeout(() => setIsPartnumberCopied(false), 2000)
+        } catch {
+            alert('متأسفانه کپی شناسه انجام نشد!')
+        }
+    }
     return (
         <Box
             position={'relative'}
@@ -74,10 +83,9 @@ const ProductCard = ({ product }) => {
                 </Box>
                 <div className=" flex flex-col items-start ">
                     <Edit product={product} />
-                </div>{' '}
+                </div>
             </div>
             <div className="flex items-center justify-center mb-2">
-                {' '}
                 <Box
                     sx={{
                         display: 'flex',
@@ -110,8 +118,11 @@ const ProductCard = ({ product }) => {
                     {product.partNumber ? (
                         <Tooltip
                             className="flex-shrink "
-                            title={` کپی پارت نامبر`}
+                            title={
+                                isPartnumberCopied ? 'کپی شد' : `کپی پارت نامبر`
+                            }
                             placement="left"
+                            onClick={() => handleCopyId(product.partNumber)}
                         >
                             <Chip
                                 label={product.partNumber}
@@ -199,20 +210,12 @@ const ProductCard = ({ product }) => {
 
 export default ProductCard
 
-import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import PersonAdd from '@mui/icons-material/PersonAdd'
-import Settings from '@mui/icons-material/Settings'
-import Logout from '@mui/icons-material/Logout'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Link from 'next/link'
 import formatPrice from '@/utils/formatPrice'
-import { width } from '@mui/system'
-import theme from '@/theme'
-import { cn } from '@/utils/cn'
-import axiosInstance from '@/utils/axios'
+import { ProductDeleteDialogContext } from '../../context/ProductDeleteDialogContextProvider'
 function Edit({ product }) {
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
@@ -244,7 +247,6 @@ function Edit({ product }) {
                 id="account-menu"
                 open={open}
                 onClose={handleClose}
-                // onClick={handleClose}
                 slotProps={{
                     paper: {
                         elevation: 0,
@@ -312,54 +314,28 @@ function Edit({ product }) {
                     <VisibilityTwoToneIcon sx={{ marginRight: 1 }} />
                     مشاهده
                 </MenuItem> */}
-                <DeleteItem productId={product._id} />
+                <DeleteItem product={product} />
             </Menu>
         </React.Fragment>
     )
 }
 
-const DeleteItem = ({ productId }) => {
-    const [loading, setLoading] = useState(false)
-    const handleDelete = async () => {
-        setLoading(true)
-        try {
-            //states validation , throws error if state are not valid
-            console.log(productId)
-            const response = await axiosInstance.delete(
-                '/admin/products/' + productId
-            )
-            console.log(response)
-            setLoading(false)
-            // if (response.data.success) {
-            //     setSuccessMessage('درخواست موفق بود!')
-            //     // Clear form fields
-            //     setTitle('')
-            //     setDescription('')
-            //     setPrice('')
-            //     setStatus(null)
-            //     setCategory(null)
-            // } else {
-            //     setErrorMessage(response.data.message || 'درخواست ناموفق بود.')
-            // }
-        } catch (error) {
-            // console.error('خطا:', error)
-            // setErrorMessage(error.response?.data?.message || 'خطا.')
-        } finally {
-            setLoading(false)
-        }
+const DeleteItem = ({ product }) => {
+    const { setOpen, setProduct } = useContext(ProductDeleteDialogContext)
+
+    const handleDeleteDialog = async () => {
+        setOpen(true)
+        setProduct(product)
     }
+
     return (
         <MenuItem
-            onClick={handleDelete}
+            onClick={handleDeleteDialog}
             sx={{
                 fontSize: '0.9rem',
             }}
         >
-            {loading ? (
-                <CircularProgress color="inherit" size={'1rem'} />
-            ) : (
-                <DeleteTwoToneIcon sx={{ marginRight: 1 }} />
-            )}
+            <DeleteTwoToneIcon sx={{ marginRight: 1 }} />
             حذف
         </MenuItem>
     )

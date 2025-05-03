@@ -17,6 +17,8 @@ import { SnackbarProvider } from 'notistack'
 import MessagesContextProvider from '@/context/MessagesContextProvider'
 import TopBar from '@/components/layout/TopBar'
 import TopBarContextProvider from '@/context/TopBarContextProvider'
+import BottomBar from '@/components/layout/BottomBar'
+import BottomBarContextProvider from '@/context/BottomBarContextProvider'
 
 const yekanVF = localFont({
     src: '../fonts/IRANYekanXVFaNumVF.woff2',
@@ -70,8 +72,10 @@ export default function RootLayout({ children }) {
                                                         'w-full'
                                                     )}
                                                 >
-                                                    <TopBar />
-                                                    {children}
+                                                    <div className="relative h-screen overflow-x-hidden overflow-y-scroll">
+                                                        <TopBar />
+                                                        {children}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </MessagesContextProvider>

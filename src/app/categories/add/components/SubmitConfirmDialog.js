@@ -23,17 +23,10 @@ export default function SubmitConfirmDialog({ handleSubmit }) {
 
     return (
         <React.Fragment>
-            <Button
-                sx={{
-                    backgroundColor: '#fff',
-                    color: '#303030',
-                }}
-                variant="contained"
-                color="#aaa"
-                onClick={handleClickOpen}
-            >
+            <Button variant="contained" onClick={handleClickOpen}>
                 افزودن دسته بندی
             </Button>
+
             <Dialog
                 open={open}
                 onClose={handleClose}

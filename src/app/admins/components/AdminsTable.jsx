@@ -41,11 +41,7 @@ export default function AdminsTable({ admins }) {
                     boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
                 }}
             >
-                <Table
-                    aria-label="admins table"
-                    sx={{ minWidth: 800 }}
-                    size="small"
-                >
+                <Table aria-label="admins table" size="small">
                     <TableHead>
                         <TableRow
                             sx={{

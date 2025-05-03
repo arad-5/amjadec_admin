@@ -1,7 +1,7 @@
-// components/BannerManager.jsx
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axiosInstance from '@/utils/axios'
 import {
     Box,
     Typography,
@@ -19,24 +19,30 @@ import {
     CircularProgress,
     TextField,
 } from '@mui/material'
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
-import AddPhotoAlternateTwoToneIcon from '@mui/icons-material/AddPhotoAlternateTwoTone'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-
-const bannersInitial = [
-    { id: 'main', title: 'بنر اصلی', image: null, link: '' },
-    { id: 'b1', title: 'بنر ۱', image: null, link: '' },
-    { id: 'b2', title: 'بنر ۲', image: null, link: '' },
-    { id: 'b3', title: 'بنر ۳', image: null, link: '' },
-]
+import EditIcon from '@mui/icons-material/EditTwoTone'
+import AddPhotoIcon from '@mui/icons-material/AddPhotoAlternateTwoTone'
+import DeleteIcon from '@mui/icons-material/DeleteOutline'
 
 const BannerManager = () => {
-    const [banners, setBanners] = useState(bannersInitial)
+    const [banners, setBanners] = useState([])
     const [selectedBanner, setSelectedBanner] = useState(null)
     const [previewUrl, setPreviewUrl] = useState(null)
+    const [selectedFile, setSelectedFile] = useState(null)
     const [link, setLink] = useState('')
     const [open, setOpen] = useState(false)
     const [uploading, setUploading] = useState(false)
+
+    useEffect(() => {
+        const fetchBanners = async () => {
+            try {
+                const res = await axiosInstance.get('/admin/dashboard/banners')
+                setBanners(res.data)
+            } catch (error) {
+                console.error('خطا در گرفتن بنرها:', error)
+            }
+        }
+        fetchBanners()
+    }, [])
 
     const handleOpenDialog = (banner) => {
         setSelectedBanner(banner)
@@ -49,33 +55,48 @@ const BannerManager = () => {
         setOpen(false)
         setSelectedBanner(null)
         setPreviewUrl(null)
+        setSelectedFile(null)
         setLink('')
     }
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]
         if (file) {
+            setSelectedFile(file)
             setPreviewUrl(URL.createObjectURL(file))
         }
     }
 
-    const handleUpload = () => {
+    const handleUpload = async () => {
+        if (!selectedBanner) return
+
         setUploading(true)
-        setTimeout(() => {
-            setBanners((prev) =>
-                prev.map((b) =>
-                    b.id === selectedBanner.id
-                        ? { ...b, image: previewUrl, link }
-                        : b
-                )
+        const formData = new FormData()
+        formData.append('title', selectedBanner.title)
+        formData.append('link', link)
+        formData.append('isMain', selectedBanner.id === 'main')
+        if (selectedFile) formData.append('image', selectedFile)
+
+        try {
+            const res = await axiosInstance.post(
+                `/admin/dashboard/banners/${selectedBanner.id}`,
+                formData
             )
-            setUploading(false)
+            const updated = res.data
+            setBanners((prev) =>
+                prev.map((b) => (b.id === updated.id ? updated : b))
+            )
             handleClose()
-        }, 1500)
+        } catch (err) {
+            console.error('خطا در آپلود:', err)
+        } finally {
+            setUploading(false)
+        }
     }
 
     const handleRemoveImage = () => {
         setPreviewUrl(null)
+        setSelectedFile(null)
     }
 
     return (
@@ -97,10 +118,9 @@ const BannerManager = () => {
                             }}
                         >
                             <CardMedia
-                                component="div"
                                 sx={{
                                     height: '100%',
-                                    backgroundColor: '#f3f4f6',
+                                    backgroundColor: '#eee',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -122,19 +142,16 @@ const BannerManager = () => {
                                         position: 'absolute',
                                         top: 8,
                                         left: 8,
-                                        bgcolor: 'rgba(255,255,255,0.85)',
-                                        '&:hover': { bgcolor: 'white' },
+                                        bgcolor: 'white',
                                     }}
                                 >
-                                    <EditTwoToneIcon fontSize="small" />
+                                    <EditIcon fontSize="small" />
                                 </IconButton>
                             </CardMedia>
                             <CardActions
                                 sx={{ px: 2, justifyContent: 'space-between' }}
                             >
-                                <Typography variant="subtitle2">
-                                    {banner.title}
-                                </Typography>
+                                <Typography>{banner.title}</Typography>
                                 {banner.link && (
                                     <Typography
                                         variant="caption"
@@ -153,7 +170,6 @@ const BannerManager = () => {
                 ))}
             </Grid>
 
-            {/* Dialog */}
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>{selectedBanner?.title}</DialogTitle>
                 <DialogContent>
@@ -194,16 +210,15 @@ const BannerManager = () => {
                                             position: 'absolute',
                                             top: 8,
                                             right: 8,
-                                            bgcolor: 'rgba(255,255,255,0.85)',
-                                            '&:hover': { bgcolor: 'white' },
+                                            bgcolor: 'white',
                                         }}
                                     >
-                                        <DeleteOutlineIcon fontSize="small" />
+                                        <DeleteIcon fontSize="small" />
                                     </IconButton>
                                 </>
                             ) : (
                                 <Stack alignItems="center" spacing={1}>
-                                    <AddPhotoAlternateTwoToneIcon fontSize="large" />
+                                    <AddPhotoIcon fontSize="large" />
                                     <Typography fontSize="0.9rem">
                                         بارگذاری تصویر جدید
                                     </Typography>
@@ -235,7 +250,7 @@ const BannerManager = () => {
                     <Button
                         onClick={handleUpload}
                         variant="contained"
-                        disabled={!previewUrl || uploading}
+                        disabled={uploading}
                         startIcon={
                             uploading && (
                                 <CircularProgress size={18} color="inherit" />

@@ -1,5 +1,3 @@
-// app/admin/create-product/page.jsx
-
 'use client'
 
 import React, { useContext, useEffect } from 'react'
@@ -43,7 +41,6 @@ export default function CreateProductPage() {
                             <ProductCategory />
                             <ProductSpecification />
                             <AttachedFiles />
-                            <ProductFilter />
                         </div>
                         <div className="col-span-6 ">
                             <ProductInventoryManagement />

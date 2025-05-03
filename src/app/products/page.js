@@ -1,6 +1,6 @@
 'use client'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import { Box } from '@mui/material'
+import { Box, IconButton } from '@mui/material'
 
 import Products from './components/Products'
 import axiosInstance from '@/utils/axios'
@@ -9,24 +9,35 @@ import ProductsSearch from './components/ProductsSearch'
 // import ProdcutsFilter from './components/ProdcutsFilter'
 import GridViewTwoToneIcon from '@mui/icons-material/GridViewTwoTone'
 import debounce from 'lodash.debounce'
+import LoopTwoToneIcon from '@mui/icons-material/LoopTwoTone'
+import { cn } from '@/utils/cn'
+import ProductDeleteDialogContextProvider from './context/ProductDeleteDialogContextProvider'
+import ProductDeleteDialog from './components/ProductDeleteDialog'
 
 const ProductManagement = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
-    const [searching, setSearching] = useState(false)
+
     const [searchQuery, setSearchQuery] = useState('')
+
     const { setTitle: setTopBarTitle, setIcon } = useContext(TopBarContext)
-    const fetchProduct = async () => {
-        const response = await axiosInstance.get('/admin/products')
-        if (response?.data?.products) {
-            setProducts(response.data.products)
+    const fetchProducts = async () => {
+        setLoading(true)
+        try {
+            const response = await axiosInstance.get('/admin/products')
+            if (response?.data?.products) {
+                setProducts(response.data.products)
+            }
+        } catch (error) {
+            console.log(error)
+        } finally {
             setLoading(false)
         }
     }
     useEffect(() => {
         setTopBarTitle('محصولات')
         setIcon(<GridViewTwoToneIcon className="ml-3 text-2xl" />)
-        fetchProduct()
+        fetchProducts()
     }, [])
     const debouncedSearch = useMemo(
         () => debounce((q) => queryProduct(q), 500),
@@ -50,20 +61,34 @@ const ProductManagement = () => {
             debouncedSearch(searchQuery.trim())
         } else {
             debouncedSearch.cancel()
-            fetchProduct()
+            fetchProducts()
         }
         return () => debouncedSearch.cancel()
     }, [searchQuery, debouncedSearch])
 
     return (
-        <Box className="rounded-lg">
-            <ProductsSearch
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-            />
-            {/* <ProdcutsFilter /> */}
-            <Products loading={loading} products={products} />
-        </Box>
+        <ProductDeleteDialogContextProvider>
+            <Box>
+                <ProductDeleteDialog refreshProducts={fetchProducts} />
+                <ProductsSearch
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                />
+                <Box
+                    sx={{
+                        padding: 2,
+                        paddingBottom: 0,
+                    }}
+                >
+                    <IconButton onClick={() => fetchProducts()}>
+                        <LoopTwoToneIcon
+                            className={cn(loading ? 'animate-spin' : '')}
+                        />
+                    </IconButton>
+                </Box>
+                <Products loading={loading} products={products} />
+            </Box>
+        </ProductDeleteDialogContextProvider>
     )
 }
 
