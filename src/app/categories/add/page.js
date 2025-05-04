@@ -1,5 +1,6 @@
 'use client'
 
+import { useSearchParams } from 'next/navigation'
 import { CategoryContext } from './context/CategoryContextProvider'
 import CategoryInfo from './components/CategoryInfo'
 import React, { useContext, useEffect, useState } from 'react'
@@ -9,8 +10,9 @@ import { TopBarContext } from '@/context/TopBarContextProvider'
 import { Add } from '@mui/icons-material'
 import { Button } from '@mui/material'
 import { MessagesContext } from '@/context/MessagesContextProvider'
-const Page = ({ searchParams }) => {
-    const { parent: parentId } = React.use(searchParams)
+const Page = () => {
+    const searchParams = useSearchParams()
+    const parentId = searchParams.get('parent')
 
     const { setTitle: setTopbarTitle, setIcon } = useContext(TopBarContext)
 
@@ -67,6 +69,7 @@ const Page = ({ searchParams }) => {
         setTopbarTitle(parent ? 'افزودن زیردسته بندی به  ' : 'افزودن دسته بندی')
         setIcon(<Add className="text-2xl ml-3" />)
         fetchParentCategory()
+        console.log('use effectasdf')
     }, [])
 
     return (
