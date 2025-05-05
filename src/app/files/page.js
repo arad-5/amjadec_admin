@@ -1,11 +1,10 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import FileFilter from './components/FileFilter'
+
 import FileSearch from './components/FileSearch'
 import FilesTable from './components/FilesTable'
-import { useContext } from 'react'
-import { TopBarContext } from '@/context/TopBarContextProvider'
+
 import FileCopyTwoToneIcon from '@mui/icons-material/FileCopyTwoTone'
 import FileDeleteDialogContextProvider from './context/FileDeleteDialogContextProvider'
 import FileEditDialogContextProvider from './context/FileEditDialogContextProvider'
@@ -14,9 +13,9 @@ import FileDeleteDialog from './components/FileDeleteDialog'
 import axiosInstance from '@/utils/axios'
 import UploadDialog from './components/UploadDialog'
 import debounce from 'lodash.debounce'
+import TopBar from '@/components/layout/TopBar'
 
-const page = () => {
-    const { setTitle, setIcon } = useContext(TopBarContext)
+const Page = () => {
     const [files, setFiles] = useState([])
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(0)
@@ -24,10 +23,6 @@ const page = () => {
     const [totalPages, setTotalPages] = useState(1)
     const [searchQuery, setSearchQuery] = useState('')
 
-    useEffect(() => {
-        setTitle('فایل ها')
-        setIcon(<FileCopyTwoToneIcon className="ml-3 text-2xl" />)
-    }, [])
     const fetchFiles = async () => {
         try {
             const response = await axiosInstance.get(
@@ -75,31 +70,38 @@ const page = () => {
         fetchFiles()
     }
     return (
-        <div className="bg-white">
-            <FileDeleteDialogContextProvider>
-                <FileEditDialogContextProvider>
-                    <UploadDialog handleRefresh={handleRefresh} />
-                    <FileEditDialog handleRefresh={handleRefresh} />
-                    <FileDeleteDialog handleRefresh={handleRefresh} />
-                    <FileSearch
-                        searchQuery={searchQuery}
-                        setSearchQuery={setSearchQuery}
-                    />
+        <>
+            <TopBar
+                title={'فایل ها'}
+                icon={<FileCopyTwoToneIcon className="ml-3 text-2xl" />}
+            />
 
-                    {/* <FileFilter /> */}
-                    <FilesTable
-                        files={files}
-                        loading={loading}
-                        page={page}
-                        setPage={setPage}
-                        rowsPerPage={rowsPerPage}
-                        setRowsPerPage={setRowsPerPage}
-                        totalPages={totalPages}
-                    />
-                </FileEditDialogContextProvider>
-            </FileDeleteDialogContextProvider>
-        </div>
+            <div className="bg-white">
+                <FileDeleteDialogContextProvider>
+                    <FileEditDialogContextProvider>
+                        <UploadDialog handleRefresh={handleRefresh} />
+                        <FileEditDialog handleRefresh={handleRefresh} />
+                        <FileDeleteDialog handleRefresh={handleRefresh} />
+                        <FileSearch
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
+                        />
+
+                        {/* <FileFilter /> */}
+                        <FilesTable
+                            files={files}
+                            loading={loading}
+                            page={page}
+                            setPage={setPage}
+                            rowsPerPage={rowsPerPage}
+                            setRowsPerPage={setRowsPerPage}
+                            totalPages={totalPages}
+                        />
+                    </FileEditDialogContextProvider>
+                </FileDeleteDialogContextProvider>
+            </div>
+        </>
     )
 }
 
-export default page
+export default Page

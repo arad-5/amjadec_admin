@@ -88,7 +88,7 @@ const Category = ({ category, setDialogData, expanded, setExpanded }) => {
                                     )}
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title="افزودن زیر مچموعه">
+                            <Tooltip title="افزودن زیر محموعه">
                                 <IconButton
                                     sx={{
                                         marginRight: 1,

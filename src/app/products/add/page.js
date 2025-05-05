@@ -15,22 +15,21 @@ import DashboardCustomizeTwoToneIcon from '@mui/icons-material/DashboardCustomiz
 import ProductContextProvider from './context/ProductContextProvider'
 import BottomBar from './components/BottomBar'
 import AttachedFiles from './components/AttachedFiles'
-import { TopBarContext } from '@/context/TopBarContextProvider'
+
+import TopBar from '@/components/layout/TopBar'
+import Messages from '@/components/layout/Messages/Messages'
 
 export default function CreateProductPage() {
-    const { setTitle: setTopBarTitle, setIcon: setTopBarIcon } =
-        useContext(TopBarContext)
-
-    useEffect(() => {
-        setTopBarTitle('افزودن محصول')
-        setTopBarIcon(
-            <DashboardCustomizeTwoToneIcon className="ml-3 text-2xl" />
-        )
-    }, [])
-
     return (
         <ProductContextProvider>
-            <div className="w-full">
+            <>
+                <TopBar
+                    title={'افزودن محصول'}
+                    icon={
+                        <DashboardCustomizeTwoToneIcon className="ml-3 text-2xl" />
+                    }
+                />
+                <Messages />
                 <div className="relative z-0">
                     <div className="px-4 mt-4 w-full">
                         <ProductImages />
@@ -49,7 +48,7 @@ export default function CreateProductPage() {
                     </div>
                 </div>
                 <BottomBar />
-            </div>
+            </>
         </ProductContextProvider>
     )
 }

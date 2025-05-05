@@ -7,8 +7,6 @@ import { cn } from '@/utils/cn'
 import CategoriesTree from './components/CategoriesTree'
 import CategoryEditContextProvider from './context/CategoryEditContextProvider'
 import CategoryEditDialog from './components/CategoryEditDialog'
-import { useContext } from 'react'
-import { TopBarContext } from '@/context/TopBarContextProvider'
 
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone'
 import axiosInstance from '@/utils/axios'
@@ -16,11 +14,11 @@ import Add from '@mui/icons-material/Add'
 import { useRouter } from 'next/navigation'
 import CategoryDeleteContextProvider from './context/CategoryDeleteContextProvider'
 import CategoryDeleteDialog from './components/CategoryDeleteDialog'
+import TopBar from '@/components/layout/TopBar'
 
 const CategoriesManagement = () => {
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(true)
-    const { setTitle, setIcon } = useContext(TopBarContext)
 
     useEffect(() => console.log(categories), [categories])
     const getAllCategories = async () => {
@@ -39,8 +37,6 @@ const CategoriesManagement = () => {
         }
     }
     useEffect(() => {
-        setTitle('دسته بندی ها')
-        setIcon(<CategoryTwoToneIcon className="text-2xl ml-3" />)
         getAllCategories()
     }, [])
 
@@ -59,6 +55,10 @@ const CategoriesManagement = () => {
         <CategoryEditContextProvider>
             <CategoryDeleteContextProvider>
                 <>
+                    <TopBar
+                        title={'دسته بندی ها'}
+                        icon={<CategoryTwoToneIcon className="text-2xl ml-3" />}
+                    />
                     <Box>
                         {/* <CategoriesSearch /> */}
                         {/* <CategoriesList filteredCategories={categories} /> */}

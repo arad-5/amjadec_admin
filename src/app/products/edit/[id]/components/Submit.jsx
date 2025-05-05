@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import { EditProductContext } from '../context/EditProductContextProvider'
 import { cn } from '@/utils/cn'
 
+import SaveAsTwoToneIcon from '@mui/icons-material/SaveAsTwoTone'
 const Submit = ({ loading }) => {
     const productStates = useContext(EditProductContext)
     const {
@@ -73,10 +74,11 @@ const Submit = ({ loading }) => {
 
     return (
         <Button
+            size="large"
             variant="contained"
-            className={cn(loading ? '' : '!bg-white !text-neutral-700')}
             onClick={handleSubmit}
             disabled={loading}
+            startIcon={<SaveAsTwoToneIcon />}
         >
             ذخیره تغییرات
         </Button>

@@ -82,7 +82,7 @@ function ProdcutExcelImport() {
     }, [uploadResult])
 
     return (
-        <Box sx={{ p: 3 }}>
+        <Box>
             <ExcelUploadForm
                 handleSubmit={handleSubmit}
                 handleFileChange={handleFileChange}

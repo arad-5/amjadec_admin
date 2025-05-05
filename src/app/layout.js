@@ -15,10 +15,6 @@ import { cn } from '@/utils/cn'
 import FileUploadDialogContextProvider from '@/context/FileUploadDialogContextProvider'
 import { SnackbarProvider } from 'notistack'
 import MessagesContextProvider from '@/context/MessagesContextProvider'
-import TopBar from '@/components/layout/TopBar'
-import TopBarContextProvider from '@/context/TopBarContextProvider'
-import BottomBar from '@/components/layout/BottomBar'
-import BottomBarContextProvider from '@/context/BottomBarContextProvider'
 
 const yekanVF = localFont({
     src: '../fonts/IRANYekanXVFaNumVF.woff2',
@@ -50,44 +46,41 @@ export default function RootLayout({ children }) {
                             <CssBaseline />
                             <AuthProvider>
                                 <FileUploadDialogContextProvider>
-                                    <TopBarContextProvider>
-                                        <MessagesContextProvider>
+                                    <MessagesContextProvider>
+                                        {pathname !== '/login' ? (
+                                            <Navbar />
+                                        ) : (
+                                            ''
+                                        )}
+                                        <div className="md:flex container mx-auto ">
                                             {pathname !== '/login' ? (
-                                                <Navbar />
+                                                <SideMenu />
                                             ) : (
                                                 ''
                                             )}
-                                            <div className="md:flex container mx-auto ">
-                                                {pathname !== '/login' ? (
-                                                    <SideMenu />
-                                                ) : (
-                                                    ''
-                                                )}
 
+                                            <div
+                                                className={cn(
+                                                    pathname !== '/login'
+                                                        ? ''
+                                                        : 'w-full h-full min-h-screen justify-center ',
+                                                    'w-full '
+                                                )}
+                                            >
                                                 <div
                                                     className={cn(
+                                                        'relative h-screen overflow-x-hidden ',
                                                         pathname !== '/login'
-                                                            ? ''
-                                                            : 'w-full h-full flex flex-1 min-h-screen justify-center ',
-                                                        'w-full'
+                                                            ? 'overflow-y-auto'
+                                                            : ''
                                                     )}
                                                 >
-                                                    <div
-                                                        className={cn(
-                                                            'relative h-screen overflow-x-hidden ',
-                                                            pathname !==
-                                                                '/login'
-                                                                ? 'overflow-y-scroll'
-                                                                : ''
-                                                        )}
-                                                    >
-                                                        <TopBar />
-                                                        {children}
-                                                    </div>
+                                                    {/* <TopBar /> */}
+                                                    {children}
                                                 </div>
                                             </div>
-                                        </MessagesContextProvider>
-                                    </TopBarContextProvider>
+                                        </div>
+                                    </MessagesContextProvider>
                                 </FileUploadDialogContextProvider>
                             </AuthProvider>
                         </SnackbarProvider>

@@ -6,15 +6,15 @@ import CategoryInfo from './components/CategoryInfo'
 import React, { useContext, useEffect, useState } from 'react'
 import axiosInstance from '@/utils/axios'
 import ParentCategory from './components/ParentCategory'
-import { TopBarContext } from '@/context/TopBarContextProvider'
+
 import { Add } from '@mui/icons-material'
 import { Button } from '@mui/material'
 import { MessagesContext } from '@/context/MessagesContextProvider'
+import TopBar from '@/components/layout/TopBar'
+import Messages from '@/components/layout/Messages/Messages'
 const Page = () => {
     const searchParams = useSearchParams()
     const parentId = searchParams.get('parent')
-
-    const { setTitle: setTopbarTitle, setIcon } = useContext(TopBarContext)
 
     const [loading, setLoading] = useState(false)
     const { title, description, slug, isMain, parent, setParent, image } =
@@ -66,30 +66,39 @@ const Page = () => {
         }
     }
     useEffect(() => {
-        setTopbarTitle(parent ? 'افزودن زیردسته بندی به  ' : 'افزودن دسته بندی')
-        setIcon(<Add className="text-2xl ml-3" />)
         fetchParentCategory()
         console.log('use effectasdf')
     }, [])
 
     return (
-        <div className="w-full h-full relative flex flex-col justify-between">
-            <div className="p-4 max-w-md gap-4 items-start">
-                <div className="p-4 rounded-lg bg-white">
-                    {parentId ? <ParentCategory /> : null}
-                    <CategoryInfo parentId={parentId} />
-                    <Button
-                        onClick={handleSubmit}
-                        loading={loading}
-                        disabled={!(title && slug)}
-                        variant="contained"
-                        startIcon={<Add />}
-                    >
-                        افزودن
-                    </Button>
+        <>
+            <TopBar
+                title={
+                    parent
+                        ? 'افزودن زیردسته بندی به  ' + ' ' + parent.title
+                        : 'افزودن دسته بندی'
+                }
+                icon={<Add className="text-2xl ml-3" />}
+            />
+            <Messages />
+            <div className="w-full h-full relative flex flex-col justify-between">
+                <div className="p-4 max-w-md gap-4 items-start">
+                    <div className="p-4 rounded-lg bg-white">
+                        {parentId ? <ParentCategory /> : null}
+                        <CategoryInfo parentId={parentId} />
+                        <Button
+                            onClick={handleSubmit}
+                            loading={loading}
+                            disabled={!(title && slug)}
+                            variant="contained"
+                            startIcon={<Add />}
+                        >
+                            افزودن
+                        </Button>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div>{' '}
+        </>
     )
 }
 

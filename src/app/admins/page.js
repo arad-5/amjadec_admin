@@ -17,19 +17,21 @@ import { IconButton, Tooltip } from '@mui/material'
 import { cn } from '@/utils/cn'
 import AdminDeleteDialogProvider from './context/AdminDeleteDialogContextProvider'
 import AdminDeleteDialog from './components/AdminDeleteDialog'
-import { TopBarContext } from '@/context/TopBarContextProvider'
+
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone'
+import TopBar from '@/components/layout/TopBar'
 
 const Page = () => {
     const router = useRouter()
     const [admins, setAdmins] = useState([])
     const [loading, setLoading] = useState(false)
 
-    const { setTitle, setIcon } = useContext(TopBarContext)
-
     const { admin } = useContext(AuthContext)
-    if (admin?.role !== 'owner') return router.push('/')
-
+    if (admin?.role !== 'owner' && admin?.role !== 'developer')
+        return router.push('/')
+    useEffect(() => {
+        fetchAdmins()
+    }, [])
     const fetchAdmins = async () => {
         try {
             setLoading(true)
@@ -41,12 +43,6 @@ const Page = () => {
             setLoading(false)
         }
     }
-
-    useEffect(() => {
-        setTitle('مدیریت ادمین')
-        setIcon(<PeopleAltTwoToneIcon className="text-2xl ml-3" />)
-        fetchAdmins()
-    }, [])
 
     const handleRefresh = () => {
         fetchAdmins()
@@ -60,7 +56,13 @@ const Page = () => {
                         <AdminEditDialog handleRefresh={handleRefresh} />
                         {/* <AdminActivitiesDialog /> */}
                         <AdminDeleteDialog handleRefresh={handleRefresh} />
-                        <Box>
+                        <>
+                            <TopBar
+                                title={'مدیریت ادمین'}
+                                icon={
+                                    <PeopleAltTwoToneIcon className="text-2xl ml-3" />
+                                }
+                            />
                             <Box
                                 sx={{
                                     padding: 3,
@@ -104,7 +106,7 @@ const Page = () => {
                                     <AdminsTable admins={admins} />
                                 </Box>
                             </Box>
-                        </Box>
+                        </>
                     </AdminDeleteDialogProvider>
                 </AdminActivitiesDialogContextProvider>
             </AdminEditDialogContextProvider>

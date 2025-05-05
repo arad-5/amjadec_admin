@@ -4,15 +4,16 @@ import { Box, IconButton } from '@mui/material'
 
 import Products from './components/Products'
 import axiosInstance from '@/utils/axios'
-import { TopBarContext } from '@/context/TopBarContextProvider'
+
 import ProductsSearch from './components/ProductsSearch'
-// import ProdcutsFilter from './components/ProdcutsFilter'
+
 import GridViewTwoToneIcon from '@mui/icons-material/GridViewTwoTone'
 import debounce from 'lodash.debounce'
 import LoopTwoToneIcon from '@mui/icons-material/LoopTwoTone'
 import { cn } from '@/utils/cn'
 import ProductDeleteDialogContextProvider from './context/ProductDeleteDialogContextProvider'
 import ProductDeleteDialog from './components/ProductDeleteDialog'
+import TopBar from '@/components/layout/TopBar'
 
 const ProductManagement = () => {
     const [products, setProducts] = useState([])
@@ -20,7 +21,6 @@ const ProductManagement = () => {
 
     const [searchQuery, setSearchQuery] = useState('')
 
-    const { setTitle: setTopBarTitle, setIcon } = useContext(TopBarContext)
     const fetchProducts = async () => {
         setLoading(true)
         try {
@@ -35,8 +35,6 @@ const ProductManagement = () => {
         }
     }
     useEffect(() => {
-        setTopBarTitle('محصولات')
-        setIcon(<GridViewTwoToneIcon className="ml-3 text-2xl" />)
         fetchProducts()
     }, [])
     const debouncedSearch = useMemo(
@@ -68,7 +66,11 @@ const ProductManagement = () => {
 
     return (
         <ProductDeleteDialogContextProvider>
-            <Box>
+            <>
+                <TopBar
+                    title={'محصولات'}
+                    icon={<GridViewTwoToneIcon className="ml-3 text-2xl" />}
+                />
                 <ProductDeleteDialog refreshProducts={fetchProducts} />
                 <ProductsSearch
                     searchQuery={searchQuery}
@@ -87,7 +89,7 @@ const ProductManagement = () => {
                     </IconButton>
                 </Box>
                 <Products loading={loading} products={products} />
-            </Box>
+            </>
         </ProductDeleteDialogContextProvider>
     )
 }

@@ -2,9 +2,9 @@ import axiosInstance from '@/utils/axios'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
-
+import WestTwoToneIcon from '@mui/icons-material/WestTwoTone'
 import React, { useState } from 'react'
-
+import FirstPageTwoToneIcon from '@mui/icons-material/FirstPageTwoTone'
 const Logout = () => {
     const [loading, setLoading] = useState(false)
 
@@ -32,9 +32,11 @@ const Logout = () => {
         <Button
             loading={loading}
             onClick={handleSubmit}
-            className="w-full"
-            variant="outlined"
+            variant="text"
+            size="large"
+            fullWidth
             color="error"
+            endIcon={<FirstPageTwoToneIcon />}
         >
             خروج
         </Button>

@@ -1,7 +1,7 @@
 'use client'
 import './globals.css'
 import localFont from 'next/font/local'
-import Navbar from '@/components/users/layout/Navbar'
+import Navbar from '@/components/layout/Navbar'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider } from '@emotion/react'

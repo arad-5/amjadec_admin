@@ -27,6 +27,8 @@ export default function AdminsTable({ admins }) {
                 return <Chip label="ادمین" color="primary" size="small" />
             case 'editor':
                 return <Chip label="ادیتور" color="default" size="small" />
+            case 'developer':
+                return <Chip label="توسعه دهنده" color="primary" size="small" />
             default:
                 return <Chip label="نامشخص" color="error" size="small" />
         }

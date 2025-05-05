@@ -16,8 +16,6 @@ const Admin = () => {
                 return <Chip label="ادمین" color="primary" size="small" />
             case 'editor':
                 return <Chip label="ادیتور" color="default" size="small" />
-            case 'developer':
-                return <Chip label="توسعه دهنده" color="primary" size="small" />
             default:
                 return <Chip label="نامشخص" color="error" size="small" />
         }
@@ -25,13 +23,7 @@ const Admin = () => {
 
     return (
         <Stack direction="row" alignItems="center" spacing={2} flexWrap="wrap">
-            <Stack
-                direction="row"
-                flexWrap={'wrap'}
-                alignItems="center"
-                spacing={1}
-                className="space-y-1"
-            >
+            <Stack direction="row" alignItems="center" spacing={1}>
                 <PermIdentityTwoToneIcon fontSize="small" />
                 <Typography
                     variant="body2"

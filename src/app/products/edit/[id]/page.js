@@ -8,12 +8,15 @@ import ProductInfo from './components/ProductInfo'
 import ProductCategory from './components/ProductCategory'
 
 import ProductFilter from './components/ProductFilter'
-import TopBar from './components/TopBar'
+
 import ProductInventoryManagement from './components/ProductInventoryManagement'
 import ProductPriceManagement from './components/ProductPriceManagement'
 import ProductSpecification from './components/ProductSpecification'
-import { Box, Divider, Skeleton } from '@mui/material'
-import { TopBarContext } from '@/context/TopBarContextProvider'
+import { Box, Skeleton } from '@mui/material'
+import BottomBar from './components/BottomBar'
+import TopBar from '@/components/layout/TopBar'
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
+
 export default function Page({ params }) {
     const { id: productId } = React.use(params)
     const [loading, setLoading] = useState(true)
@@ -24,7 +27,6 @@ export default function Page({ params }) {
         setPrice,
         setCategory,
         setSpecifications,
-
         setDiscountPrice,
         setIsDiscountActive,
         setStockStatus,
@@ -34,8 +36,9 @@ export default function Page({ params }) {
         setPartNumber,
         setImages,
         setMainImage,
+        title,
     } = useContext(EditProductContext)
-    const { setTitle: setTopBarTitle } = useContext(TopBarContext)
+
     const fetchProduct = async () => {
         const response = await axiosInstance.get('/admin/products/' + productId)
         console.log(response)
@@ -62,13 +65,15 @@ export default function Page({ params }) {
     }
 
     useEffect(() => {
-        setTopBarTitle(null)
         fetchProduct()
     }, [])
 
     return (
         <div className="w-full">
-            <TopBar loading={loading} />
+            <TopBar
+                title={'ویرایش محصول' + ' ' + title}
+                icon={<EditTwoToneIcon className="ml-3 text-2xl" />}
+            />
             <div className="relative z-0">
                 <div className="px-4 mt-4 w-full">
                     {loading ? (
@@ -168,6 +173,7 @@ export default function Page({ params }) {
                     )}
                 </div>
             </div>
+            <BottomBar loading={loading} />
         </div>
     )
 }

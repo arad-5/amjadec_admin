@@ -9,13 +9,12 @@ import FileDeleteDialogContextProvider from '../context/FileDeleteDialogContextP
 import FileDeleteDialog from '../components/FileDeleteDialog'
 import UploadDialog from '../components/UploadDialog'
 import PermMediaTwoToneIcon from '@mui/icons-material/PermMediaTwoTone'
-import { TopBarContext } from '@/context/TopBarContextProvider'
 import axiosInstance from '@/utils/axios'
 import FileSearch from './components/FileSearch'
 import debounce from 'lodash.debounce'
+import TopBar from '@/components/layout/TopBar'
 
 const Page = () => {
-    const { setTitle, setIcon } = useContext(TopBarContext)
     // حالت‌های مربوط به صفحه‌بندی
     const [page, setPage] = useState(1)
     const [limit] = useState(8) // تعداد آیتم در هر صفحه
@@ -24,10 +23,7 @@ const Page = () => {
     const [images, setImages] = useState([])
     // حالت بارگذاری
     const [loading, setLoading] = useState(false)
-    useEffect(() => {
-        setTitle('تصاویر')
-        setIcon(<PermMediaTwoToneIcon className="ml-3 text-2xl" />)
-    }, [])
+
     const debouncedSearch = useMemo(
         () => debounce((q) => queryImages(q), 500),
         []
@@ -91,22 +87,30 @@ const Page = () => {
     return (
         <FileDeleteDialogContextProvider>
             <FileEditDialogContextProvider>
-                <FileEditDialog handleRefresh={handleRefresh} />
-                <UploadDialog handleRefresh={handleRefresh} />
-                <FileDeleteDialog handleRefresh={handleRefresh} />
-                <FileSearch
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                />
-                <ImageGallery
-                    images={images}
-                    loading={loading}
-                    handleRefresh={handleRefresh}
-                    limit={limit}
-                    totalPages={totalPages}
-                    page={page}
-                    setPage={setPage}
-                />
+                <>
+                    <TopBar
+                        title={'تصاویر'}
+                        icon={
+                            <PermMediaTwoToneIcon className="ml-3 text-2xl" />
+                        }
+                    />
+                    <FileEditDialog handleRefresh={handleRefresh} />
+                    <UploadDialog handleRefresh={handleRefresh} />
+                    <FileDeleteDialog handleRefresh={handleRefresh} />
+                    <FileSearch
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
+                    />
+                    <ImageGallery
+                        images={images}
+                        loading={loading}
+                        handleRefresh={handleRefresh}
+                        limit={limit}
+                        totalPages={totalPages}
+                        page={page}
+                        setPage={setPage}
+                    />{' '}
+                </>
             </FileEditDialogContextProvider>
         </FileDeleteDialogContextProvider>
     )
