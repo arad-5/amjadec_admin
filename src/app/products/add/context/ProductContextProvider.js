@@ -22,6 +22,10 @@ const ProductContextProvider = ({ children }) => {
         // { id: 2, attribute: 'Color', value: 'Blue' },
     ])
     const [attachedFiles, setAttachedFiles] = useState([])
+    const [symbolFile, setSymbolFile] = useState(null)
+    const [datasheetFile, setDatasheetFile] = useState(null)
+    const [footprintFile, setFootprintFile] = useState(null)
+    const [file3d, setFile3d] = useState(null)
     const [imageUrl, setImageUrl] = useState('')
 
     // State for handling submission status
@@ -132,6 +136,14 @@ const ProductContextProvider = ({ children }) => {
                 setMainImage,
                 attachedFiles,
                 setAttachedFiles,
+                symbolFile,
+                setSymbolFile,
+                datasheetFile,
+                setDatasheetFile,
+                footprintFile,
+                setFootprintFile,
+                file3d,
+                setFile3d,
             }}
         >
             {children}

@@ -2,7 +2,7 @@ import React from 'react'
 import Submit from './Submit'
 import { Box } from '@mui/material'
 
-const BottomBar = ({ loading }) => {
+const BottomBar = ({ loading, setLoading }) => {
     return (
         <Box
             sx={{
@@ -17,7 +17,7 @@ const BottomBar = ({ loading }) => {
                 zIndex: 20,
             }}
         >
-            <Submit loading={loading} />
+            <Submit loading={loading} setLoading={setLoading} />
         </Box>
     )
 }

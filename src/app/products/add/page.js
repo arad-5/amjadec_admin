@@ -17,7 +17,7 @@ import BottomBar from './components/BottomBar'
 import AttachedFiles from './components/AttachedFiles'
 
 import TopBar from '@/components/layout/TopBar'
-import Messages from '@/components/layout/Messages/Messages'
+import ProductFilesSection from './components/ProductFilesSection'
 
 export default function CreateProductPage() {
     return (
@@ -29,7 +29,6 @@ export default function CreateProductPage() {
                         <DashboardCustomizeTwoToneIcon className="ml-3 text-2xl" />
                     }
                 />
-                <Messages />
                 <div className="relative z-0">
                     <div className="px-4 mt-4 w-full">
                         <ProductImages />
@@ -39,7 +38,7 @@ export default function CreateProductPage() {
                             <ProductInfo />
                             <ProductCategory />
                             <ProductSpecification />
-                            <AttachedFiles />
+                            <ProductFilesSection />
                         </div>
                         <div className="col-span-6 ">
                             <ProductInventoryManagement />

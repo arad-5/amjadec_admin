@@ -1,3 +1,5 @@
+import Messages from './Messages/Messages'
+
 const TopBar = ({ title, icon }) => {
     return (
         <>
@@ -8,6 +10,7 @@ const TopBar = ({ title, icon }) => {
                         <h1 className="text-xl font-bold">{title}</h1>
                     </div>
                 </div>
+                <Messages />
             </div>
         </>
     )

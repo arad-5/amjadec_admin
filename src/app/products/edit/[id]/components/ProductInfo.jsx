@@ -14,7 +14,10 @@ const ProductInfo = () => {
     } = useContext(EditProductContext)
 
     return (
-        <div className="mb-3">
+        <div className="mb-3   bg-white p-4 rounded-lg shadow-md">
+            <div className="pb-3 mb-3 border-b">
+                <span className="text-lg font-semibold">مشخصات محصول</span>
+            </div>
             <form className=" w-full">
                 <TextField
                     label="عنوان محصول"

@@ -20,6 +20,11 @@ const EditProductContextProvider = ({ children }) => {
     const [specifications, setSpecifications] = useState([])
     const [imageUrl, setImageUrl] = useState('')
 
+    const [attachedFiles, setAttachedFiles] = useState([])
+    const [symbolFile, setSymbolFile] = useState(null)
+    const [datasheetFile, setDatasheetFile] = useState(null)
+    const [footprintFile, setFootprintFile] = useState(null)
+    const [file3d, setFile3d] = useState(null)
     // State for handling submission status
     const [successMessage, setSuccessMessage] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
@@ -130,6 +135,16 @@ const EditProductContextProvider = ({ children }) => {
                 setImages,
                 mainImage,
                 setMainImage,
+                attachedFiles,
+                setAttachedFiles,
+                symbolFile,
+                setSymbolFile,
+                datasheetFile,
+                setDatasheetFile,
+                footprintFile,
+                setFootprintFile,
+                file3d,
+                setFile3d,
             }}
         >
             {children}

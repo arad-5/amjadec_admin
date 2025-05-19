@@ -6,7 +6,8 @@ import { EditProductContext } from '../context/EditProductContextProvider'
 import { cn } from '@/utils/cn'
 
 import SaveAsTwoToneIcon from '@mui/icons-material/SaveAsTwoTone'
-const Submit = ({ loading }) => {
+import { MessagesContext } from '@/context/MessagesContextProvider'
+const Submit = ({ loading, setLoading }) => {
     const productStates = useContext(EditProductContext)
     const {
         productId,
@@ -29,8 +30,13 @@ const Submit = ({ loading }) => {
         stockStatus,
         stockQuantity,
         lowStockThreshold,
+        attachedFiles,
+        symbolFile,
+        datasheetFile,
+        footprintFile,
+        file3d,
     } = useContext(EditProductContext)
-
+    const { setMessages } = useContext(MessagesContext)
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -40,13 +46,18 @@ const Submit = ({ loading }) => {
 
         try {
             //states validation , throws error if state are not valid
-
+            setLoading(true)
             console.log('submit', productStates)
             const response = await axiosInstance.put(
                 '/admin/products/' + productId,
                 {
                     mainImage: mainImage?._id,
                     images: images.map((image) => image._id),
+                    attachedFiles: attachedFiles.map((file) => file._id),
+                    symbolFile: symbolFile?._id || null,
+                    datasheetFile: datasheetFile?._id || null,
+                    footprintFile: footprintFile?._id || null,
+                    file3d: file3d?._id || null,
                     title,
                     description,
                     partNumber,
@@ -60,15 +71,37 @@ const Submit = ({ loading }) => {
                     lowStockThreshold,
                 }
             )
-
+            if (response.data.success) {
+                setMessages([
+                    {
+                        message: 'محصول ویرایش شد',
+                        type: 'success',
+                    },
+                ])
+            } else {
+                setMessages([
+                    {
+                        message:
+                            response?.data?.message || 'درخواست ناموفق بود.',
+                        type: 'error',
+                    },
+                ])
+            }
             if (response.data.success) {
                 setSuccessMessage('درخواست موفق بود!')
             } else {
                 setErrorMessage(response.data.message || 'درخواست ناموفق بود.')
             }
         } catch (error) {
-            console.error('خطا:', error)
-            setErrorMessage(error.response?.data?.message || 'خطا.')
+            setMessages([
+                {
+                    message:
+                        error.response?.data?.message || 'درخواست ناموفق بود.',
+                    type: 'error',
+                },
+            ])
+        } finally {
+            setLoading(false)
         }
     }
 

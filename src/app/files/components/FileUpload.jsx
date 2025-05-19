@@ -80,7 +80,7 @@ const FileUpload = ({
             {uploadedFiles.length > 0 && (
                 <div className={cn('p-4 rounded-lg border')}>
                     <div className="mb-3">
-                        <span>فایل های آپدیت شده:</span>
+                        <span>فایل های آپلود شده:</span>
                     </div>
                     <div className="flex gap-2 flex-wrap">
                         {uploadedFiles.map((file, index) => (

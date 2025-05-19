@@ -1,6 +1,6 @@
 'use client'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import { Box, IconButton } from '@mui/material'
+import { Box, IconButton, Pagination } from '@mui/material'
 
 import Products from './components/Products'
 import axiosInstance from '@/utils/axios'
@@ -20,13 +20,19 @@ const ProductManagement = () => {
     const [loading, setLoading] = useState(true)
 
     const [searchQuery, setSearchQuery] = useState('')
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [limit] = useState(10)
 
-    const fetchProducts = async () => {
+    const fetchProducts = async (pageNumber = 1) => {
         setLoading(true)
         try {
-            const response = await axiosInstance.get('/admin/products')
+            const response = await axiosInstance.get(
+                `/admin/products?page=${pageNumber}&limit=${limit}`
+            )
             if (response?.data?.products) {
                 setProducts(response.data.products)
+                setTotalPages(response.data.pagination.pages)
             }
         } catch (error) {
             console.log(error)
@@ -34,13 +40,18 @@ const ProductManagement = () => {
             setLoading(false)
         }
     }
+
     useEffect(() => {
-        fetchProducts()
-    }, [])
+        if (!searchQuery) {
+            fetchProducts(page)
+        }
+    }, [page, searchQuery]) // فقط زمانی که صفحه یا سرچ خالیه
+
     const debouncedSearch = useMemo(
         () => debounce((q) => queryProduct(q), 500),
         []
     )
+
     const queryProduct = async (q) => {
         try {
             setLoading(true)
@@ -54,15 +65,17 @@ const ProductManagement = () => {
             setLoading(false)
         }
     }
+
     useEffect(() => {
         if (searchQuery) {
+            setPage(1)
             debouncedSearch(searchQuery.trim())
         } else {
             debouncedSearch.cancel()
-            fetchProducts()
+            fetchProducts(page)
         }
         return () => debouncedSearch.cancel()
-    }, [searchQuery, debouncedSearch])
+    }, [searchQuery])
 
     return (
         <ProductDeleteDialogContextProvider>
@@ -71,24 +84,46 @@ const ProductManagement = () => {
                     title={'محصولات'}
                     icon={<GridViewTwoToneIcon className="ml-3 text-2xl" />}
                 />
-                <ProductDeleteDialog refreshProducts={fetchProducts} />
+                <ProductDeleteDialog
+                    refreshProducts={() => fetchProducts(page)}
+                />
                 <ProductsSearch
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
                 />
-                <Box
-                    sx={{
-                        padding: 2,
-                        paddingBottom: 0,
-                    }}
-                >
-                    <IconButton onClick={() => fetchProducts()}>
+                <Box sx={{ padding: 2, paddingBottom: 0 }}>
+                    <IconButton onClick={() => fetchProducts(page)}>
                         <LoopTwoToneIcon
                             className={cn(loading ? 'animate-spin' : '')}
                         />
                     </IconButton>
                 </Box>
                 <Products loading={loading} products={products} />
+                {!searchQuery && totalPages > 1 && (
+                    <Box
+                        sx={{
+                            width: '100%',
+                            py: 2,
+                            backgroundColor: '#fff',
+                            position: 'sticky',
+                            bottom: 0,
+                            left: 0,
+                        }}
+                    >
+                        <Box className="flex justify-center">
+                            <Pagination
+                                count={totalPages}
+                                page={page}
+                                onChange={(e, value) => setPage(value)}
+                                color="primary"
+                                variant="outlined"
+                                shape="rounded"
+                                showFirstButton
+                                showLastButton
+                            />
+                        </Box>
+                    </Box>
+                )}
             </>
         </ProductDeleteDialogContextProvider>
     )

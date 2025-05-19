@@ -3,8 +3,7 @@
 import BannerManager from '@/components/banners/BannerManager'
 import ShopStats from '@/components/dashboard/ShopStats'
 
-import { Box, Typography } from '@mui/material'
-import { useContext, useEffect } from 'react'
+import { Box } from '@mui/material'
 
 export default function Home() {
     return (

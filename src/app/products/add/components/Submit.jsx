@@ -26,6 +26,11 @@ const Submit = () => {
         stockStatus,
         stockQuantity,
         lowStockThreshold,
+        attachedFiles,
+        symbolFile,
+        datasheetFile,
+        footprintFile,
+        file3d,
     } = productStates
     const { setMessages } = useContext(MessagesContext)
     const [loading, setLoading] = useState(false)
@@ -53,7 +58,13 @@ const Submit = () => {
                 stockStatus,
                 stockQuantity,
                 lowStockThreshold,
-                specifications,
+
+                // 🔻 فایل‌های خاص
+                attachedFiles: attachedFiles.map((f) => f._id),
+                symbolFile: symbolFile?._id || null,
+                datasheetFile: datasheetFile?._id || null,
+                footprintFile: footprintFile?._id || null,
+                file3d: file3d?._id || null,
             })
 
             if (response.data.success) {
@@ -79,6 +90,7 @@ const Submit = () => {
                 ])
             }
         } catch (error) {
+            console.error(error)
             setMessages([
                 {
                     message:

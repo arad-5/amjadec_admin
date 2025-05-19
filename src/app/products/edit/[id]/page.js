@@ -16,6 +16,10 @@ import { Box, Skeleton } from '@mui/material'
 import BottomBar from './components/BottomBar'
 import TopBar from '@/components/layout/TopBar'
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
+import MessageCollapse from '@/components/layout/Messages/MessageCollapse'
+import Messages from '@/components/layout/Messages/Messages'
+import { MessagesContext } from '@/context/MessagesContextProvider'
+import ProductFileSection from './components/ProductFileSection'
 
 export default function Page({ params }) {
     const { id: productId } = React.use(params)
@@ -35,6 +39,11 @@ export default function Page({ params }) {
         setCategoryObj,
         setPartNumber,
         setImages,
+        setAttachedFiles,
+        setSymbolFile,
+        setDatasheetFile,
+        setFootprintFile,
+        setFile3d,
         setMainImage,
         title,
     } = useContext(EditProductContext)
@@ -59,7 +68,11 @@ export default function Page({ params }) {
             setPartNumber(product.partNumber)
             setImages(product.images)
             setMainImage(product.mainImage)
-            //
+            setAttachedFiles(product.attachedFiles)
+            setSymbolFile(product.symbolFile)
+            setDatasheetFile(product.datasheetFile)
+            setFootprintFile(product.footprintFile)
+            setFile3d(product.file3d)
             setLoading(false)
         }
     }
@@ -116,16 +129,12 @@ export default function Page({ params }) {
                             />
                         </Box>
                     ) : (
-                        <div className="col-span-6 pl-4 bg-white p-4 rounded-lg shadow-md ">
-                            <div className="pb-3 mb-3 border-b">
-                                <span className="text-lg font-semibold">
-                                    مشخصات محصول
-                                </span>
-                            </div>
+                        <div className="col-span-6 pl-4 ">
                             <ProductInfo />
                             <ProductCategory />
                             <ProductSpecification />
-                            <ProductFilter />
+
+                            <ProductFileSection />
                         </div>
                     )}
                     {loading ? (
@@ -173,7 +182,7 @@ export default function Page({ params }) {
                     )}
                 </div>
             </div>
-            <BottomBar loading={loading} />
+            <BottomBar loading={loading} setLoading={setLoading} />
         </div>
     )
 }
