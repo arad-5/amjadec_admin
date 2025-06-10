@@ -1,45 +1,45 @@
 {
-  "name": "amjadec_admin",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.3.1",
-    "@mui/joy": "^5.0.0-beta.51",
-    "@mui/material": "^6.4.4",
-    "@mui/system": "^6.3.1",
-    "@mui/x-data-grid": "^7.24.0",
-    "@mui/x-date-pickers": "^7.24.0",
-    "@toolpad/core": "^0.12.0",
-    "axios": "^1.7.9",
-    "clsx": "^2.1.1",
-    "js-cookie": "^3.0.5",
-    "jsonwebtoken": "^9.0.2",
-    "lodash.debounce": "^4.0.8",
-    "moment-jalaali": "^0.10.4",
-    "nanoid": "^5.1.5",
-    "next": "^15.3.1",
-    "notistack": "^3.0.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-icons": "^5.4.0",
-    "stylis": "^4.3.4",
-    "stylis-plugin-rtl": "^2.1.1",
-    "swiper": "^11.2.2",
-    "tailwind-merge": "^2.6.0"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.4",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1"
-  }
+    "name": "amjadec_admin",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev --turbopack",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/icons-material": "^6.3.1",
+        "@mui/joy": "^5.0.0-beta.51",
+        "@mui/material": "^6.4.4",
+        "@mui/system": "^6.3.1",
+        "@mui/x-data-grid": "^7.24.0",
+        "@mui/x-date-pickers": "^7.24.0",
+        "@toolpad/core": "^0.12.0",
+        "axios": "^1.7.9",
+        "clsx": "^2.1.1",
+        "js-cookie": "^3.0.5",
+        "jsonwebtoken": "^9.0.2",
+        "lodash.debounce": "^4.0.8",
+        "moment-jalaali": "^0.10.4",
+        "nanoid": "^5.1.5",
+        "next": "^15.3.1",
+        "notistack": "^3.0.2",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-icons": "^5.4.0",
+        "stylis": "^4.3.4",
+        "stylis-plugin-rtl": "^2.1.1",
+        "swiper": "^11.2.2",
+        "tailwind-merge": "^2.6.0",
+        "tailwindcss": "^3.4.1"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3",
+        "eslint": "^9",
+        "eslint-config-next": "15.1.4",
+        "postcss": "^8"
+    }
 }
