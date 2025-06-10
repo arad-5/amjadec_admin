@@ -33,6 +33,7 @@ import QuizTwoToneIcon from '@mui/icons-material/QuizTwoTone'
 import QuestionAnswerTwoToneIcon from '@mui/icons-material/QuestionAnswerTwoTone'
 import DataObjectIcon from '@mui/icons-material/DataObject'
 import PermPhoneMsgTwoToneIcon from '@mui/icons-material/PermPhoneMsgTwoTone'
+import SchoolTwoToneIcon from '@mui/icons-material/SchoolTwoTone'
 
 const NavigationList = () => {
     const { admin } = useContext(AuthContext)
@@ -192,6 +193,14 @@ const NavigationList = () => {
             title: 'نسخه ها',
             href: '/versions',
             icon: <DataObjectIcon className="!text-inherit" fontSize="small" />,
+            active: true,
+        },
+        {
+            title: 'آموزش',
+            href: '/document',
+            icon: (
+                <SchoolTwoToneIcon className="!text-inherit" fontSize="small" />
+            ),
             active: true,
         },
     ]

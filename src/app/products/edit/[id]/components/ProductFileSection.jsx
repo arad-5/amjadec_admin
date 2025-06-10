@@ -24,11 +24,10 @@ const ProductFileSection = () => {
     } = useContext(EditProductContext)
 
     return (
-        <Box className="bg-white rounded-lg shadow-md p-4 mt-4">
+        <Box className="bg-white rounded-lg shadow-md p-4 my-4">
             <Typography variant="h6" gutterBottom>
                 فایل‌های مرتبط با محصول
             </Typography>
-
             <FilePicker
                 label="فایل‌های پیوست"
                 value={attachedFiles}

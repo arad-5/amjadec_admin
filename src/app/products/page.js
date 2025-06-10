@@ -22,7 +22,7 @@ const ProductManagement = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
-    const [limit] = useState(10)
+    const [limit] = useState(8)
 
     const fetchProducts = async (pageNumber = 1) => {
         setLoading(true)
@@ -79,7 +79,7 @@ const ProductManagement = () => {
 
     return (
         <ProductDeleteDialogContextProvider>
-            <>
+            <Box>
                 <TopBar
                     title={'محصولات'}
                     icon={<GridViewTwoToneIcon className="ml-3 text-2xl" />}
@@ -110,7 +110,7 @@ const ProductManagement = () => {
                             left: 0,
                         }}
                     >
-                        <Box className="flex justify-center">
+                        <Box className="flex justify-center fixed lg:static w-full py-4 bottom-0 bg-white">
                             <Pagination
                                 count={totalPages}
                                 page={page}
@@ -124,7 +124,7 @@ const ProductManagement = () => {
                         </Box>
                     </Box>
                 )}
-            </>
+            </Box>
         </ProductDeleteDialogContextProvider>
     )
 }

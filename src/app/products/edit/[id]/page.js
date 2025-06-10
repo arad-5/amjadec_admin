@@ -111,7 +111,7 @@ export default function Page({ params }) {
                         <ProductImages />
                     )}
                 </div>
-                <div className="p-4 items-start grid grid-cols-12 gap-4">
+                <div className="p-4 items-start md:grid grid-cols-12 gap-4">
                     {loading ? (
                         <Box className="bg-white w-full pl-4 p-4 rounded-lg shadow-md col-span-6">
                             <Skeleton

@@ -33,7 +33,7 @@ export default function CreateProductPage() {
                     <div className="px-4 mt-4 w-full">
                         <ProductImages />
                     </div>
-                    <div className="p-4 items-start grid grid-cols-12 gap-4">
+                    <div className="p-4 items-start  md:grid grid-cols-12 gap-4">
                         <div className="col-span-6 ">
                             <ProductInfo />
                             <ProductCategory />

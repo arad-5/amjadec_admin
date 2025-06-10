@@ -22,8 +22,8 @@ export default function Products({ products, loading }) {
         <Box sx={{ flexGrow: 1, padding: 3 }}>
             <Grid
                 container
-                spacing={{ xs: 2, md: 2 }}
-                columns={{ xs: 5, sm: 10, md: 16 }}
+                spacing={{ xs: 1, md: 2 }}
+                columns={{ xs: 2, sm: 10, md: 16 }}
             >
                 {loading
                     ? Array.from({ length: 8 }).map((items, i) => (
