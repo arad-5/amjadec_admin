@@ -15,11 +15,12 @@ import { CategoryEditContext } from '../context/CategoryEditContextProvider'
 import axiosInstance from '@/utils/axios'
 import CircularProgress from '@mui/material/CircularProgress'
 import { enqueueSnackbar } from 'notistack'
+import ImagePickerCard from '@/components/images/ImageSelectionDialog'
 
 export default function CategoryEditDialog({ onUpdate }) {
     const { open, setOpen, selectedCategory, setSelectedCategory } =
         useContext(CategoryEditContext)
-
+    const [image, setImage] = useState(null)
     const [errorMessage, setErrorMessage] = useState(null)
     const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
@@ -35,7 +36,9 @@ export default function CategoryEditDialog({ onUpdate }) {
                 slug: selectedCategory.slug || '',
                 description: selectedCategory.description || '',
             })
+            setImage(selectedCategory.image)
         }
+        console.log(selectedCategory)
     }, [selectedCategory])
 
     const handleChange = (e) => {
@@ -54,7 +57,7 @@ export default function CategoryEditDialog({ onUpdate }) {
             setLoading(true)
             const response = await axiosInstance.put(
                 `/admin/categories/${selectedCategory._id}`,
-                form
+                { ...form, image: image?._id }
             )
             if (onUpdate) onUpdate()
             handleClose()
@@ -77,6 +80,10 @@ export default function CategoryEditDialog({ onUpdate }) {
         <Dialog open={open} handleClose={() => handleClose()} fullWidth>
             <DialogTitle>ویرایش دسته‌بندی</DialogTitle>
             <DialogContent>
+                <ImagePickerCard
+                    selectedImage={image}
+                    setSelectedImage={setImage}
+                />
                 <TextField
                     margin="dense"
                     label="عنوان"
