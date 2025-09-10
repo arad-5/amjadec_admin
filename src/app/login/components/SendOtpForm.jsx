@@ -17,9 +17,7 @@ const SendOtpForm = ({ phone, setPhone, setError, setStep }) => {
                 .post(
                     `/admin/auth/send-otp`,
                     { phone },
-                    {
-                        withCredentials: true,
-                    }
+                    { withCredentials: true }
                 )
                 .catch((err) => {
                     console.error(err)
@@ -53,7 +51,6 @@ const SendOtpForm = ({ phone, setPhone, setError, setStep }) => {
                     placeholder="مثل ۰۹۱۲۱۲۳۴۵۶۷"
                     className="!mb-3"
                 />
-
                 <Button
                     type="submit"
                     startIcon={<EastIcon />}

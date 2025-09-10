@@ -216,6 +216,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Link from 'next/link'
 import formatPrice from '@/utils/formatPrice'
 import { ProductDeleteDialogContext } from '../../context/ProductDeleteDialogContextProvider'
+import { faSlug } from '@/utils/faSlug'
 function Edit({ product }) {
     const [anchorEl, setAnchorEl] = useState(null)
     const open = Boolean(anchorEl)
@@ -225,7 +226,8 @@ function Edit({ product }) {
     const handleClose = () => {
         setAnchorEl(null)
     }
-
+    const { title, partNumber } = product
+    const slug = `${faSlug(title)}-${partNumber}`
     return (
         <React.Fragment>
             <IconButton
@@ -304,16 +306,13 @@ function Edit({ product }) {
                 >
                     <LinkIcon sx={{ marginRight: 1 }} />
                     کپی لینک
-                </MenuItem>
-                <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                        fontSize: '0.9rem',
-                    }}
-                >
-                    <VisibilityTwoToneIcon sx={{ marginRight: 1 }} />
-                    مشاهده
                 </MenuItem> */}
+                <Link href={`https://amjadec.com/products/${slug}`}>
+                    <MenuItem sx={{ fontSize: '0.9rem' }}>
+                        <VisibilityTwoToneIcon sx={{ marginRight: 1 }} />
+                        مشاهده
+                    </MenuItem>
+                </Link>
                 <DeleteItem product={product} />
             </Menu>
         </React.Fragment>

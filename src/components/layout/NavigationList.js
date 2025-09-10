@@ -157,7 +157,7 @@ const NavigationList = () => {
                     fontSize="small"
                 />
             ),
-            active: false,
+            active: true,
         },
         {
             title: 'سوالات',

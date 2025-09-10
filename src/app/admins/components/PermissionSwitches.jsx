@@ -20,6 +20,7 @@ const PERMISSIONS = [
     { key: 'questions', label: 'تایید و پاسخ سوالات' },
     { key: 'comments', label: 'تایید و پاسخ نظرات' },
     { key: 'banners', label: 'تغییرات بنر' },
+    { key: 'sendOrderSms', label: 'ارسال پیامک سفارش ثبت شده' },
 ]
 
 export default function PermissionSwitches({ permissions, setPermissions }) {
