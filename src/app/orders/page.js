@@ -35,8 +35,8 @@ const AdminOrdersPage = () => {
                 title={'لیست سفارشات'}
                 icon={<ShoppingCartOutlinedIcon className="ml-3 text-2xl" />}
             />
-            <Box sx={{ flexGrow: 1, padding: 3 }}>
-                <table className="w-full table-auto border text-sm">
+            <Box sx={{ flexGrow: 1, padding: 3 }} className="overflow-auto">
+                <table className=" table-auto border text-sm overflow-auto">
                     <thead className="bg-gray-100 text-right">
                         <tr>
                             <th className="border px-3 py-2">شناسه</th>

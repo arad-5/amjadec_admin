@@ -185,7 +185,7 @@ function NestedList() {
                     fontSize="small"
                 />
             ),
-            active: false,
+            active: true,
         },
         {
             title: 'سوالات',
