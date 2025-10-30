@@ -1,6 +1,12 @@
-import { TextField } from '@mui/material'
+import {
+    FormControlLabel,
+    FormGroup,
+    Switch,
+    TextField,
+    Typography,
+} from '@mui/material'
 import { Box } from '@mui/system'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import RoleSelect from './RoleSelect'
 import PermissionSwitches from './PermissionSwitches'
 import { AdminEditDialogContext } from '../context/AdminEditDialogContextProvider'
@@ -16,6 +22,10 @@ function EditForm() {
         permissions,
         setPermissions,
     } = useContext(AdminEditDialogContext)
+    useEffect(() => {
+        console.log(permissions)
+    }, [permissions])
+
     return (
         <Box
             component="form"
@@ -41,7 +51,42 @@ function EditForm() {
                 value={phone}
                 onChange={(e) => setPhone(e.currentTarget.value)}
             />
-            {role === 'owner' ? null : (
+            {role === 'owner' ? (
+                <FormGroup sx={{ width: '100%' }}>
+                    <Typography fontSize={18} mb={1}>
+                        دسترسی ها
+                    </Typography>
+
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            mb: 1,
+                        }}
+                    >
+                        <Typography fontSize={16} sx={{ mr: 2 }}>
+                            ارسال پیامک سفارش ثبت شده
+                        </Typography>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={permissions.includes(
+                                        'sendOrderSms'
+                                    )}
+                                    onChange={() => {
+                                        setPermissions(
+                                            permissions.includes('sendOrderSms')
+                                                ? []
+                                                : ['sendOrderSms']
+                                        )
+                                    }}
+                                />
+                            }
+                            label=""
+                        />
+                    </Box>
+                </FormGroup>
+            ) : (
                 <>
                     <RoleSelect role={role} setRole={setRole} />
                     <PermissionSwitches
